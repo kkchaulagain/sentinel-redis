@@ -15,7 +15,7 @@ services:
  
   redis-slave:
     image: redislabs/redisearch:latest
-    command: redis-server --slaveof redis-master 6379 --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes --replica-announce-ip 198.199.67.109
+    command: redis-server --slaveof redis-master 6379 --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes --replica-announce-ip 198.199.67.109 --replica-announce-port 6380
     links:
       - redis-master
     ports:
@@ -24,7 +24,7 @@ services:
       - "./.data:/data"
   redis-slave2:
     image: redislabs/redisearch:latest
-    command: redis-server --slaveof redis-master 6379 --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes --replica-announce-ip 198.199.67.109 
+    command: redis-server --slaveof redis-master 6379 --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes --replica-announce-ip 198.199.67.109 --replica-announce-port 6382
     ports:
       - 6382:6379
     links:
