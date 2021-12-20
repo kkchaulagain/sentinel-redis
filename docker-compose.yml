@@ -7,6 +7,7 @@ services:
     container_name: redis-master
     restart: on-failure
     hostname: redis
+    network_mode: host
     command: redis-server --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes
     ports:
       - 6379:6379
@@ -15,6 +16,7 @@ services:
  
   redis-slave:
     image: redislabs/redisearch:latest
+    network_mode: host
     command: redis-server --slaveof redis-master 6379 --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes
     links:
       - redis-master
@@ -22,6 +24,7 @@ services:
       - "./.data:/data"
   redis-slave2:
     image: redislabs/redisearch:latest
+    network_mode: host
     command: redis-server --slaveof redis-master 6379 --loadmodule /usr/lib/redis/modules/redisearch.so --appendonly yes
     links:
       - redis-master
@@ -34,6 +37,7 @@ services:
       context: ./redis-sentinel
     ports:
       - 26379:26379
+    network_mode: host
     links:
       - redis-master
  
@@ -43,6 +47,7 @@ services:
       context: ./redis-sentinel
     ports:
       - 26381:26379
+    network_mode: host
     links:
       - redis-master
  
@@ -50,6 +55,7 @@ services:
   redis-sentinel3:
     build: 
       context: ./redis-sentinel
+    network_mode: host
     ports:
       - 26380:26379
     links:
